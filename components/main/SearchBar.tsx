@@ -12,25 +12,21 @@ import { FaRegCalendarAlt } from "react-icons/fa";
 import { BsPersonFillAdd } from "react-icons/bs";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
-
-interface OptionsProps {
-  adult: number;
-  children: number;
-  room: number;
-}
+import Option from "./Option";
+import { OptionProps } from "@/types/type";
 
 const SearchBar = () => {
   const { push } = useRouter();
 
   const [openDate, setOpenDate] = useState<boolean>(false);
   const [openOption, setOpenOption] = useState<boolean>(false);
-  const [option, setOption] = useState<OptionsProps>({
+  const [option, setOption] = useState<OptionProps>({
     adult: 1,
     children: 0,
     room: 1,
   });
 
-  const [date, setDate] = useState([
+  const [date, setDate] = useState<any>([
     {
       startDate: new Date(),
       endDate: new Date(),
@@ -50,7 +46,7 @@ const SearchBar = () => {
 
   //handle event for increase or decrease room , adult and children
   const handleOption = useCallback(
-    (name: keyof OptionsProps, operation: string) => {
+    (name: keyof OptionProps, operation: string) => {
       setOption((prev) => ({
         ...prev,
         [name]: operation === "increase" ? option[name] + 1 : option[name] - 1,
@@ -65,7 +61,7 @@ const SearchBar = () => {
     const endDate = format(date[0].endDate, "MM/dd/yyyy");
 
     push(
-      `/hotel?date=${startDate}-${endDate}&adult=${option.adult}&children=${option.children}&room=${option.room}`
+      `/hotel?checkin=${startDate}&checkout=${endDate}&adult=${option.adult}&children=${option.children}&room=${option.room}`
     );
   };
 
@@ -119,73 +115,7 @@ const SearchBar = () => {
 
             {/* OPTIONS FOR INCREASE OR DECREASE ROOM,ADULT,CHILDREN */}
             {openOption && (
-              <div className="flex flex-col shadow-2xl p-5  gap-y-5 rounded-md absolute bg-white top-20 left-0 w-[300px] ">
-                <div className="flex items-center justify-between  ">
-                  <span>adult</span>
-                  <div className="flex gap-x-2 items-center justify-center ">
-                    <button
-                      type="button"
-                      disabled={option.adult <= 1}
-                      className="px-2 bg-gray-50 border-2 border-gray-200 disabled:cursor-not-allowed"
-                      onClick={() => handleOption("adult", "decrease")}
-                    >
-                      -
-                    </button>
-                    <span>{option.adult}</span>
-                    <button
-                      type="button"
-                      className="px-2 bg-gray-50 border-2 border-gray-200"
-                      onClick={() => handleOption("adult", "increase")}
-                    >
-                      +
-                    </button>
-                  </div>
-                </div>
-
-                <div className="flex items-center justify-between">
-                  <span>children</span>
-                  <div className="flex gap-x-2 items-center justify-center ">
-                    <button
-                      type="button"
-                      disabled={option.children <= 0}
-                      className="px-2 bg-gray-50 border-2 border-gray-200 disabled:cursor-not-allowed"
-                      onClick={() => handleOption("children", "decrease")}
-                    >
-                      -
-                    </button>
-                    <span>{option.children}</span>
-                    <button
-                      type="button"
-                      className="px-2 bg-gray-50 border-2 border-gray-200"
-                      onClick={() => handleOption("children", "increase")}
-                    >
-                      +
-                    </button>
-                  </div>
-                </div>
-
-                <div className="flex items-center justify-between">
-                  <span>room</span>
-                  <div className="flex gap-x-2 items-center justify-center">
-                    <button
-                      type="button"
-                      disabled={option.room <= 1}
-                      className="px-2 bg-gray-50 border-2 border-gray-200 disabled:cursor-not-allowed"
-                      onClick={() => handleOption("room", "decrease")}
-                    >
-                      -
-                    </button>
-                    <span>{option.room}</span>
-                    <button
-                      type="button"
-                      className="px-2 bg-gray-50 border-2 border-gray-200"
-                      onClick={() => handleOption("room", "increase")}
-                    >
-                      +
-                    </button>
-                  </div>
-                </div>
-              </div>
+              <Option option={option} handleOption={handleOption} />
             )}
           </div>
           <button
@@ -194,17 +124,6 @@ const SearchBar = () => {
             className="bg-blue-600 h-full w-full md:w-1/6 rounded-md  text-white text-xl font-semibold"
           >
             Search
-            {/* <Link
-              href={{
-                pathname: "/hotel",
-                query: {
-                  option: JSON.stringify(option),
-                  date: JSON.stringify(date),
-                },
-              }}
-            >
-              Search
-            </Link> */}
           </button>
         </div>
       </Container>
