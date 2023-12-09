@@ -21,10 +21,4 @@ export const Header: Story = {
     variant: "blue",
   },
   render: (args) => <Navbar />,
-
-  // args: {
-  //   user: {
-  //     name: "Jane Doe",
-  //   },
-  // },
 };

@@ -14,6 +14,7 @@ import { useRouter } from "next/navigation";
 import Link from "next/link";
 import Option from "./Option";
 import { OptionProps } from "@/types/type";
+import { Button } from "../Button";
 
 const SearchBar = () => {
   const { push } = useRouter();
@@ -118,13 +119,16 @@ const SearchBar = () => {
               <Option option={option} handleOption={handleOption} />
             )}
           </div>
-          <button
-            onClick={handleSearch}
-            type="button"
-            className="bg-blue-600 h-full w-full md:w-1/6 rounded-md  text-white text-xl font-semibold"
+
+          <Button
+            handleSearch={handleSearch}
+            width="full"
+            height="full"
+            background="blue-600"
+            font="semibold"
           >
             Search
-          </button>
+          </Button>
         </div>
       </Container>
     </>

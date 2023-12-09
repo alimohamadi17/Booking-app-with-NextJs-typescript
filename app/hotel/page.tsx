@@ -2,11 +2,10 @@
 
 import Container from "@/components/Container";
 import Option from "@/components/main/Option";
+import { HomePageProps } from "@/types/type";
 
-const HomePage = ({ searchParams }: { searchParams: string | any }) => {
-  const { adult, children, room } = searchParams;
-  const CheckIn = searchParams.checkin;
-  const CheckOut = searchParams.checkout;
+const HomePage = ({ searchParams }: { searchParams: HomePageProps }) => {
+  const { adult, children, room, checkout, checkin } = searchParams;
 
   const information = `adult:${adult}children:${children}room:${room}`;
 
@@ -25,12 +24,12 @@ const HomePage = ({ searchParams }: { searchParams: string | any }) => {
             </div>
             <div>
               <p className="text-sm"> Check-in date</p>
-              <input type="text" placeholder="date" value={CheckIn} />
+              <input type="text" placeholder="date" value={checkin} />
             </div>
 
             <div>
               <p className="text-sm"> Check-out date</p>
-              <input type="text" placeholder="date" value={CheckOut} />
+              <input type="text" placeholder="date" value={checkout} />
             </div>
             <div>
               <p className="text-sm">information</p>
